@@ -68,9 +68,9 @@ def PlaceInputs(tabSaisies, tabVisu, tabCalc, symbPlayer):
     if tabCalc[tabSaisies[0] - 1][tabSaisies[1] - 1] == '':
         tabVisu[GetTabVisuCase(tabSaisies[0], 'line')][GetTabVisuCase(tabSaisies[1], 'col')] = ' ' + symbPlayer + ' '  # placement du symbole du joueur dans le tableau visuel
         tabCalc[tabSaisies[0] - 1][tabSaisies[1] - 1] = symbPlayer  # placement du symbole du joueur dans le tableau de calcul
-        verif = 'true'
+        verif = True
     else:
-        verif = 'false'
+        verif = False
 
     return tabVisu, tabCalc, verif
 
@@ -103,6 +103,22 @@ def GetTabVisuCase(saisie, strVerif):
 
 def CalcVictoire(tabCalc):
 
+    victoire = True
+    for x in range(0, 3):
+        verifSigneCol = tabCalc[x][0]
+        verifSigneLine = tabCalc[0][x]
+        for y in range(1, 3):
+            if (tabCalc[x][y] != verifSigneCol or tabCalc[y][x] != verifSigneLine):
+                vicoire = False
+
+    lineDiagBasDroite = {tabCalc[1][1], tabCalc[2][2]}
+    lineDiagBasGauche = {tabCalc[1][1], tabCalc[0][2]}
+
+    if not(all(c == tabCalc[0][0] for c in lineDiagBasDroite) or all(c == tabCalc[2][0] for c in lineDiagBasGauche)):
+        victoire = False
+
+    return victoire
+
 
 jouer = 'oui'
 compteur = 0
@@ -111,11 +127,11 @@ while jouer == 'oui' and compteur <= 9:
     compteur = 0
     symbJoueur = 'O'
     numJoueur = 2
-    victoire = 'false'
+    victoire = False
     tabVisu = NewTabVisu()
     tabCalc = NewTabCalc()
 
-    while victoire != 'true':
+    while victoire != True:
 
         # Initialisation des variables nécessaires à chaque tours
         compteur += 1
@@ -129,10 +145,10 @@ while jouer == 'oui' and compteur <= 9:
         PrintTabVisu(tabVisu)
 
         # Saisie des coordonnées où placer le symbole du joueur (avec vérifications)
-        verif = 'false'
-        while verif == "false":
+        verif = False
+        while verif == False:
             tabVisu, tabCalc, verif = SetInTable(tabVisu, tabCalc, symbJoueur)
-            if verif == "false":
+            if verif == False:
                 print('Cette case est déjà prise!')
 
         victoire = CalcVictoire(tabCalc)
@@ -140,7 +156,7 @@ while jouer == 'oui' and compteur <= 9:
     PrintTabVisu(tabVisu)
 
     # En cas de victoire d'un joueur
-    if victoire == 'true':
+    if victoire == True:
         print('Le joueur ' + str(numJoueur) + ' remporte la partie!')
     # En cas d'égalité
     else:
