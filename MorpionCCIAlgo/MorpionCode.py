@@ -1,3 +1,5 @@
+from random import *
+
 def NewTabVisu():  # création du visuel de la grille
     print('\n' * 60)
     tabVisu = [[' -', '-', '---', '-', '---', '-', '---', '-', '---', '-', '---', '-', '- '],
@@ -64,18 +66,17 @@ def SetInTable(tabVisu, tabCalc, symbPlayer):
 
 def PlaceInputs(tabSaisies, tabVisu, tabCalc, symbPlayer):
 
-    verif = ''
     if tabCalc[tabSaisies[0] - 1][tabSaisies[1] - 1] == '':
-        tabVisu[GetTabVisuCase(tabSaisies[0], 'line')][GetTabVisuCase(tabSaisies[1], 'col')] = ' ' + symbPlayer + ' '  # placement du symbole du joueur dans le tableau visuel
+        tabVisu[GetTabVisuCase(tabSaisies[0])][GetTabVisuCase(tabSaisies[1])] = ' ' + symbPlayer + ' '  # placement du symbole du joueur dans le tableau visuel
         tabCalc[tabSaisies[0] - 1][tabSaisies[1] - 1] = symbPlayer  # placement du symbole du joueur dans le tableau de calcul
-        verif = 'true'
+        verif = True
     else:
-        verif = 'false'
+        verif = False
 
     return tabVisu, tabCalc, verif
 
 
-def GetTabVisuCase(saisie, strVerif):
+def GetTabVisuCase(saisie):
 
     """
     Cette focntion a pour but de renvoyer la valeur de l'emplacement demandé dans tabVisu selon différents cas possibles
@@ -85,32 +86,24 @@ def GetTabVisuCase(saisie, strVerif):
     "switcher.get()" est la façon de récupérer la valeur en insérant la clé dans la parenthèse
     """
 
-    if strVerif == 'line':  # si le numéro de la ligne est demandé
-        switcher = {
-            1: 2,
-            2: 6,
-            3: 10,
-        }
-    else:
-        switcher = {
-            1: 2,
-            2: 6,
-            3: 10,
-        }
-
+    switcher = {
+        1: 2,
+        2: 6,
+        3: 10
+    }
     return switcher.get(saisie)
 
 
 def CalcVictoire(tabCalc):
 
-    victoire = 'false'
+    victoire = False
 
     for x in range(0, 3):  # Boucle de vérification des lignes et des colonnes
         verifSigneCol = tabCalc[x][0]
         verifSigneLine = tabCalc[0][x]
 
         if (tabCalc[x][1] == verifSigneCol and tabCalc[x][2] == verifSigneCol and verifSigneCol != '' or tabCalc[1][x] == verifSigneLine and tabCalc[2][x] == verifSigneLine and verifSigneLine != ''):
-            victoire = 'true'
+            victoire = True
 
     # Déclaration de variables nécessaires à la vérification des diagonales
     lineDiagBasDroite = [tabCalc[1][1], tabCalc[2][2]]
@@ -119,10 +112,48 @@ def CalcVictoire(tabCalc):
     verifSigneDiagBasDroite = tabCalc[0][0]
     verifSigneDiagBasGauche = tabCalc[2][0]
 
+    # Vérification des diagonales
     if (verifSigneDiagBasDroite == lineDiagBasDroite[0] and verifSigneDiagBasDroite == lineDiagBasDroite[1] and verifSigneDiagBasDroite != '' or verifSigneDiagBasGauche == lineDiagBasGauche[0] and verifSigneDiagBasGauche == lineDiagBasGauche[1] and verifSigneDiagBasGauche != ''):
-        victoire = 'true'
+        victoire = True
 
     return victoire
+
+def TourIA(tabVisu, tabCalc, symbIA):
+    symbIAexist = False
+
+    # Analyse de s'il y a déjà un symbole de l'IA dans la grille
+    for line in tabCalc:
+        for case in line:
+            if case == symbIA:
+                symbIAexist = True
+
+    if (symbIAexist):
+        test = 1
+    else:
+        randPos = [1, 3, 5, 7, 9]
+        verif = False
+        while (verif == False):
+            tabVisu, tabCalc, verif = PlaceInputs(DefCoordsIASymb(choice(randPos)), tabVisu, tabCalc, symbIA)
+
+def DefCoordsIASymb(coord):
+
+    # EMPLACEMENT DES COORDONNEES DANS LA GRILLE
+    # |1|2|3|
+    # |4|5|6|
+    # |7|8|9|
+
+    switcher = {
+        1: [1, 1],  # Ici, les valeurs ont +1 car def PlaceInputs réduit de 1 les données qu'elle reçoit
+        2: [1, 2],
+        3: [1, 3],
+        4: [2, 1],
+        5: [2, 2],
+        6: [2, 3],
+        7: [3, 1],
+        8: [3, 2],
+        9: [3, 3]
+    }
+    return switcher.get(coord)
 
 
 jouer = 'oui'
@@ -132,11 +163,11 @@ while jouer == 'oui':
     compteur = 0
     symbJoueur = 'O'
     numJoueur = 2
-    victoire = 'false'
+    victoire = False
     tabVisu = NewTabVisu()
     tabCalc = NewTabCalc()
 
-    while victoire != 'true' and compteur <= 9:
+    while victoire != True and compteur <= 9:
 
         # Initialisation des variables nécessaires à chaque tours
         compteur += 1
@@ -149,19 +180,22 @@ while jouer == 'oui':
 
         PrintTabVisu(tabVisu)
 
-        # Saisie des coordonnées où placer le symbole du joueur (avec vérifications)
-        verif = 'false'
-        while verif == 'false':
-            tabVisu, tabCalc, verif = SetInTable(tabVisu, tabCalc, symbJoueur)
-            if verif == 'false':
-                print('Cette case est déjà prise!')
+        if symbJoueur == 'X':
+            # Saisie des coordonnées où placer le symbole du joueur (avec vérifications)
+            verif = False
+            while verif == False:
+                tabVisu, tabCalc, verif = SetInTable(tabVisu, tabCalc, symbJoueur)
+                if verif == False:
+                    print('Cette case est déjà prise!')
+        else:
+            TourIA(tabVisu, tabCalc, symbJoueur)
 
         victoire = CalcVictoire(tabCalc)
 
     PrintTabVisu(tabVisu)
 
     # En cas de victoire d'un joueur
-    if victoire == 'true':
+    if victoire == True:
         print('Le joueur ' + str(numJoueur) + ' remporte la partie!')
     # En cas d'égalité
     else:
