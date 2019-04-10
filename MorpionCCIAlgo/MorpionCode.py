@@ -68,9 +68,9 @@ def PlaceInputs(tabSaisies, tabVisu, tabCalc, symbPlayer):
     if tabCalc[tabSaisies[0] - 1][tabSaisies[1] - 1] == '':
         tabVisu[GetTabVisuCase(tabSaisies[0], 'line')][GetTabVisuCase(tabSaisies[1], 'col')] = ' ' + symbPlayer + ' '  # placement du symbole du joueur dans le tableau visuel
         tabCalc[tabSaisies[0] - 1][tabSaisies[1] - 1] = symbPlayer  # placement du symbole du joueur dans le tableau de calcul
-        verif = True
+        verif = 'true'
     else:
-        verif = False
+        verif = 'false'
 
     return tabVisu, tabCalc, verif
 
@@ -103,35 +103,40 @@ def GetTabVisuCase(saisie, strVerif):
 
 def CalcVictoire(tabCalc):
 
-    victoire = True
-    for x in range(0, 3):
+    victoire = 'false'
+
+    for x in range(0, 3):  # Boucle de vérification des lignes et des colonnes
         verifSigneCol = tabCalc[x][0]
         verifSigneLine = tabCalc[0][x]
-        for y in range(1, 3):
-            if (tabCalc[x][y] != verifSigneCol or tabCalc[y][x] != verifSigneLine):
-                vicoire = False
 
-    lineDiagBasDroite = {tabCalc[1][1], tabCalc[2][2]}
-    lineDiagBasGauche = {tabCalc[1][1], tabCalc[0][2]}
+        if (tabCalc[x][1] == verifSigneCol and tabCalc[x][2] == verifSigneCol and verifSigneCol != '' or tabCalc[1][x] == verifSigneLine and tabCalc[2][x] == verifSigneLine and verifSigneLine != ''):
+            victoire = 'true'
 
-    if not(all(c == tabCalc[0][0] for c in lineDiagBasDroite) or all(c == tabCalc[2][0] for c in lineDiagBasGauche)):
-        victoire = False
+    # Déclaration de variables nécessaires à la vérification des diagonales
+    lineDiagBasDroite = [tabCalc[1][1], tabCalc[2][2]]
+    lineDiagBasGauche = [tabCalc[1][1], tabCalc[2][0]]
+
+    verifSigneDiagBasDroite = tabCalc[0][0]
+    verifSigneDiagBasGauche = tabCalc[2][0]
+
+    if (verifSigneDiagBasDroite == lineDiagBasDroite[0] and verifSigneDiagBasDroite == lineDiagBasDroite[1] and verifSigneDiagBasDroite != '' or verifSigneDiagBasGauche == lineDiagBasGauche[0] and verifSigneDiagBasGauche == lineDiagBasGauche[1] and verifSigneDiagBasGauche != ''):
+        victoire = 'true'
 
     return victoire
 
 
 jouer = 'oui'
 compteur = 0
-while jouer == 'oui' and compteur <= 9:
+while jouer == 'oui':
     # Initialisation des variables nécessaires à chaque parties
     compteur = 0
     symbJoueur = 'O'
     numJoueur = 2
-    victoire = False
+    victoire = 'false'
     tabVisu = NewTabVisu()
     tabCalc = NewTabCalc()
 
-    while victoire != True:
+    while victoire != 'true' and compteur <= 9:
 
         # Initialisation des variables nécessaires à chaque tours
         compteur += 1
@@ -145,10 +150,10 @@ while jouer == 'oui' and compteur <= 9:
         PrintTabVisu(tabVisu)
 
         # Saisie des coordonnées où placer le symbole du joueur (avec vérifications)
-        verif = False
-        while verif == False:
+        verif = 'false'
+        while verif == 'false':
             tabVisu, tabCalc, verif = SetInTable(tabVisu, tabCalc, symbJoueur)
-            if verif == False:
+            if verif == 'false':
                 print('Cette case est déjà prise!')
 
         victoire = CalcVictoire(tabCalc)
@@ -156,7 +161,7 @@ while jouer == 'oui' and compteur <= 9:
     PrintTabVisu(tabVisu)
 
     # En cas de victoire d'un joueur
-    if victoire == True:
+    if victoire == 'true':
         print('Le joueur ' + str(numJoueur) + ' remporte la partie!')
     # En cas d'égalité
     else:
