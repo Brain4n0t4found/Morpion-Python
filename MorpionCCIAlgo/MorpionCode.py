@@ -125,15 +125,26 @@ def TourIA(tabVisu, tabCalc, symbIA):
     for line in tabCalc:
         for case in line:
             if case == symbIA:
-                symbIAexist = True
+                if symbIAexist == False:
+                    symbIAexist = True
 
-    if (symbIAexist):
-        test = 1
-    else:
+
+    if symbIAexist == False:  # Si ucun symbole de l'IA n'a été trouvé
         randPos = [1, 3, 5, 7, 9]
         verif = False
         while (verif == False):
             tabVisu, tabCalc, verif = PlaceInputs(DefCoordsIASymb(choice(randPos)), tabVisu, tabCalc, symbIA)
+    else:  # Le joueur n'aura pu placer qu'un symbole auparavant, pas besoin de prendre en comptre son premier symbole dans les vérifs.
+        for line in range(0, 3):
+            for col in range(0, 3):
+                if tabCalc[line][col] != ' ':
+                    tableVerif = SetTableVerif(line, col)
+
+
+    return tabVisu, tabCalc
+
+def SetTableVerif(line, col):
+    
 
 def DefCoordsIASymb(coord):
 
@@ -188,7 +199,7 @@ while jouer == 'oui':
                 if verif == False:
                     print('Cette case est déjà prise!')
         else:
-            TourIA(tabVisu, tabCalc, symbJoueur)
+            tabVisu, tabCalc = TourIA(tabVisu, tabCalc, symbJoueur)
 
         victoire = CalcVictoire(tabCalc)
 
