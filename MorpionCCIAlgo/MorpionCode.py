@@ -18,6 +18,7 @@ def NewTabVisu():  # création du visuel de la grille
     return tabVisu
 
 
+
 def NewTabCalc():  # création de la grille de calcul
     tabCalc = [['', '', ''],
                ['', '', ''],
@@ -212,7 +213,7 @@ while jouer == 'oui':
 
     PrintTabVisu(tabVisu)
 
-    # En cas de victoire d'un joueur
+    # En cas de victoire d'un joueur#
     if victoire == True:
         print('Le joueur ' + str(numJoueur) + ' remporte la partie!')
     # En cas d'égalité
