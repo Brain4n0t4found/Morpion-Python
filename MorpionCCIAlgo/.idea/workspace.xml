@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2eaf3548-18b2-4e7e-a250-048453807e2c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MorpionCode.py" beforeDir="false" afterPath="$PROJECT_DIR$/MorpionCode.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -48,20 +49,22 @@
     <session id="1604083601">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="5" />
+          <entry key="project.open.time.12" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.3" value="4" />
-          <entry key="project.opened" value="5" />
+          <entry key="project.open.time.8" value="1" />
+          <entry key="project.opened" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="3009" />
+          <entry key="py" value="3306" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="3009" />
+          <entry key="Python" value="3306" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -81,8 +84,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MorpionCode.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="146" column="4" selection-start-line="146" selection-start-column="4" selection-end-line="146" selection-end-column="4" />
+            <state relative-caret-position="263">
+              <caret line="150" column="6" selection-start-line="150" selection-start-column="6" selection-end-line="150" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -140,7 +143,7 @@
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="D:/pycharm/Convertisseur.py" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.general" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -199,12 +202,12 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24973656" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.36008677" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.36008677" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.42407808" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -251,8 +254,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MorpionCode.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="146" column="4" selection-start-line="146" selection-start-column="4" selection-end-line="146" selection-end-column="4" />
+        <state relative-caret-position="263">
+          <caret line="150" column="6" selection-start-line="150" selection-start-column="6" selection-end-line="150" selection-end-column="6" />
         </state>
       </provider>
     </entry>

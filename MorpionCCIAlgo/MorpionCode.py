@@ -138,13 +138,20 @@ def TourIA(tabVisu, tabCalc, symbIA):
         for line in range(0, 3):
             for col in range(0, 3):
                 if tabCalc[line][col] != ' ':
-                    tableVerif = SetTableVerif(line, col)
+                    tableVerif = SetTableVerif(line, col, tabCalc)
+
+                # for lineVerif
 
 
     return tabVisu, tabCalc
 
-def SetTableVerif(line, col):
-    
+def SetTableVerif(line, col, tabCalc):
+    tabVerif = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']]
+
+    # try:
+
+
+    return tabVerif
 
 def DefCoordsIASymb(coord):
 
