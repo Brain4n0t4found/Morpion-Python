@@ -86,6 +86,7 @@ def GetTabVisuCase(saisie):
     switcher est un dictionnaire, un tableau spécifique permettant de retrouver une valeur grâce à une "clé" (1 ou 2 par exemple)
     "switcher.get()" est la façon de récupérer la valeur en insérant la clé dans la parenthèse
     """
+    #  Test
 
     #  test
 
