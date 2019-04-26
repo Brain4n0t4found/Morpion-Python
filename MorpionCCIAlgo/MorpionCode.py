@@ -136,7 +136,8 @@ def TourIA(tabVisu, tabCalc, symbIA):
         while (verif == False):
             tabVisu, tabCalc, verif = PlaceInputs(DefCoordsIASymb(choice(randPos)), tabVisu, tabCalc, symbIA)
     else:  # Le joueur n'aura pu placer qu'un symbole auparavant, pas besoin de prendre en comptre son premier symbole dans les vérifs.
-        listSymbX = []
+
+        listSymbX = []  # Listes contenant toutes les coordonnées où les symboles apparaissent
         listSymbO = []
         for line in range(0, 3):
             for col in range(0, 3):
@@ -151,8 +152,29 @@ def TourIA(tabVisu, tabCalc, symbIA):
     return tabVisu, tabCalc
 
 def CheckSymb(symb, listSymb):
-    
+
+    for elementToCompare in range(0, listSymb.length):
+        for comparison in range(0, listSymb.length):
+            if listSymb[elementToCompare][0] == listSymb[comparison][0] and elementToCompare != comparison:  # Si les deux éléments sont sur la même ligne
+                LookForMissingSymbPlace([listSymb[elementToCompare][1], listSymb[comparison][1]])  # Envoi de la colonne des éléments
+            elif listSymb[elementToCompare][1] == listSymb[comparison][1] and elementToCompare != comparison:  # Sinon si sur la même colonne
+                LookForMissingSymbPlace([listSymb[elementToCompare][0], listSymb[comparison][0]])  # Envoi de la ligne des éléments
+
     return
+
+def LookForMissingSymbPlace(tabCoords):
+
+    """
+    Cette fonction a pour but de renvoyer la valeur non comprise dans tabCoords, afin que l'IA sache ou essayer de
+    placer le symbole afin d'effectuer une victoire ou un blocage
+    """
+
+    if 0 not in tabCoords:
+        return 0
+    elif 1 not in tabCoords:
+        return 1
+    else:
+        return 2
 
 def DefCoordsIASymb(coord):
 
@@ -176,7 +198,6 @@ def DefCoordsIASymb(coord):
 
 
 jouer = 'oui'
-compteur = 0
 while jouer == 'oui':
     # Initialisation des variables nécessaires à chaque parties
     compteur = 0
