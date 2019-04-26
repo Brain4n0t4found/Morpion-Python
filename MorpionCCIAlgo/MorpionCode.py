@@ -141,13 +141,13 @@ def TourIA(tabVisu, tabCalc, symbIA):
         listSymbO = []
         for line in range(0, 3):
             for col in range(0, 3):
-                if tabCalc[line][col] == 'X':
+                if tabCalc[line][col] == ' X ':
                     listSymbX.append([line, col])
-                elif tabCalc[line][col] == 'O':
+                elif tabCalc[line][col] == ' O ':
                     listSymbO.append([line, col])
 
-        CheckSymb('O', listSymbO)
-        CheckSymb('X', listSymbX)
+        CheckSymb(' O ', listSymbO)
+        CheckSymb(' X ', listSymbX)
 
     return tabVisu, tabCalc
 
@@ -181,7 +181,7 @@ compteur = 0
 while jouer == 'oui':
     # Initialisation des variables nécessaires à chaque parties
     compteur = 0
-    symbJoueur = 'O'
+    symbJoueur = ' O '
     numJoueur = 2
     victoire = False
     tabVisu = NewTabVisu()
@@ -191,16 +191,16 @@ while jouer == 'oui':
 
         # Initialisation des variables nécessaires à chaque tours
         compteur += 1
-        if symbJoueur == 'O':
-            symbJoueur = 'X'
+        if symbJoueur == ' O ':
+            symbJoueur = ' X '
             numJoueur -= 1
         else:
-            symbJoueur = 'O'
+            symbJoueur = ' O '
             numJoueur += 1
 
         PrintTabVisu(tabVisu)
 
-        if symbJoueur == 'X':
+        if symbJoueur == ' X ':
             # Saisie des coordonnées où placer le symbole du joueur (avec vérifications)
             verif = False
             while verif == False:
