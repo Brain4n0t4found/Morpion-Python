@@ -135,32 +135,43 @@ def TourIA(tabVisu, tabCalc, symbIA):
         verif = False
         while (verif == False):
             tabVisu, tabCalc, verif = PlaceInputs(DefCoordsIASymb(choice(randPos)), tabVisu, tabCalc, symbIA)
-    else:  # Le joueur n'aura pu placer qu'un symbole auparavant, pas besoin de prendre en comptre son premier symbole dans les vérifs.
 
+    else:
         listSymbX = []  # Listes contenant toutes les coordonnées où les symboles apparaissent
         listSymbO = []
         for line in range(0, 3):
             for col in range(0, 3):
                 if tabCalc[line][col] == 'X':
-                    listSymbX.append([line, col])
+                    listSymbX.append([line, col])  # Ajout des coordonnées dans la List
                 elif tabCalc[line][col] == 'O':
-                    listSymbO.append([line, col])
+                    listSymbO.append([line, col])  # Idem
 
-        CheckSymb('O', listSymbO)
-        CheckSymb('X', listSymbX)
+        if not CheckSymb('O', listSymbO, tabVisu, tabCalc, symbIA):
+            if not CheckSymb('X', listSymbX, tabVisu, tabCalc, symbIA):  # Si l'IA n'a pas pu placer un symbole de manière définie
+                randPos = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                verif = False
+                while (verif == False):
+                    tabVisu, tabCalc, verif = PlaceInputs(DefCoordsIASymb(choice(randPos)), tabVisu, tabCalc, symbIA)
 
     return tabVisu, tabCalc
 
-def CheckSymb(symb, listSymb):
+def CheckSymb(symb, listSymb, tabVisu, tabCalc, symbIA):
+    placementDef = False
 
-    for elementToCompare in range(0, listSymb.length):
-        for comparison in range(0, listSymb.length):
-            if listSymb[elementToCompare][0] == listSymb[comparison][0] and elementToCompare != comparison:  # Si les deux éléments sont sur la même ligne
-                LookForMissingSymbPlace([listSymb[elementToCompare][1], listSymb[comparison][1]])  # Envoi de la colonne des éléments
-            elif listSymb[elementToCompare][1] == listSymb[comparison][1] and elementToCompare != comparison:  # Sinon si sur la même colonne
-                LookForMissingSymbPlace([listSymb[elementToCompare][0], listSymb[comparison][0]])  # Envoi de la ligne des éléments
+    for elementToCompare in range(0, len(listSymb)):
+        for comparison in range(0, len(listSymb)):
+            if placementDef == False:
+                if listSymb[elementToCompare][0] == listSymb[comparison][0] and elementToCompare != comparison:  # Si les deux éléments sont sur la même ligne
 
-    return
+                    coordToAim = LookForMissingSymbPlace([listSymb[elementToCompare][1], listSymb[comparison][1]])
+                    tabVisu, tabCalc, placementDef = PlaceInputs([listSymb[elementToCompare][0] + 1, coordToAim + 1], tabVisu, tabCalc, symbIA)  # Tentative de placement dans la grille
+
+                elif listSymb[elementToCompare][1] == listSymb[comparison][1] and elementToCompare != comparison:  # Sinon si sur la même colonne
+
+                    coordToAim = LookForMissingSymbPlace([listSymb[elementToCompare][0], listSymb[comparison][0]])
+                    tabVisu, tabCalc, placementDef = PlaceInputs([coordToAim + 1, listSymb[elementToCompare][1] + 1], tabVisu, tabCalc, symbIA)  # Tentative de placement dans la grille
+
+    return placementDef
 
 def LookForMissingSymbPlace(tabCoords):
 
