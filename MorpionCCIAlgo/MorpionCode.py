@@ -136,23 +136,18 @@ def TourIA(tabVisu, tabCalc, symbIA):
         while (verif == False):
             tabVisu, tabCalc, verif = PlaceInputs(DefCoordsIASymb(choice(randPos)), tabVisu, tabCalc, symbIA)
     else:  # Le joueur n'aura pu placer qu'un symbole auparavant, pas besoin de prendre en comptre son premier symbole dans les vérifs.
+        listSymbX = []
+        listSymbO = []
         for line in range(0, 3):
             for col in range(0, 3):
-                if tabCalc[line][col] != ' ':
-                    tableVerif = SetTableVerif(line, col, tabCalc)
+                if tabCalc[line][col] == 'X':
+                    listSymbX.append([line, col])
+                elif tabCalc[line][col] == 'O':
+                    listSymbO.append([line, col])
 
-                # for lineVerif
-
+        
 
     return tabVisu, tabCalc
-
-def SetTableVerif(line, col, tabCalc):
-    tabVerif = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']]
-
-    # try:
-
-
-    return tabVerif
 
 def DefCoordsIASymb(coord):
 
