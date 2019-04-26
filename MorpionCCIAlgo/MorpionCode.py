@@ -87,6 +87,8 @@ def GetTabVisuCase(saisie):
     "switcher.get()" est la façon de récupérer la valeur en insérant la clé dans la parenthèse
     """
 
+    #  test
+
     switcher = {
         1: 2,
         2: 6,
