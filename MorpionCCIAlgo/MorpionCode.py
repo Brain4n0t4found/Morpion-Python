@@ -145,9 +145,14 @@ def TourIA(tabVisu, tabCalc, symbIA):
                 elif tabCalc[line][col] == 'O':
                     listSymbO.append([line, col])
 
-        
+        CheckSymb('O', listSymbO)
+        CheckSymb('X', listSymbX)
 
     return tabVisu, tabCalc
+
+def CheckSymb(symb, listSymb):
+    
+    return
 
 def DefCoordsIASymb(coord):
 
