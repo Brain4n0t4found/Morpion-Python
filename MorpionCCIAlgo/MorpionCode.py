@@ -2,20 +2,21 @@ from random import *
 
 def NewTabVisu():  # création du visuel de la grille
     print('\n' * 60)
-    tabVisu = [[' -', '-', '---', '-', '---', '-', '---', '-', '---', '-', '---', '-', '- '],
-               ['| ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' |'],
-               ['| ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' |'],
-               ['| ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' |'],
-               [' -', '-', '---', '-', '---', '-', '---', '-', '---', '-', '---', '-', '- '],
-               ['| ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' |'],
-               ['| ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' |'],
-               ['| ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' |'],
-               [' -', '-', '---', '-', '---', '-', '---', '-', '---', '-', '---', '-', '- '],
-               ['| ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' |'],
-               ['| ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' |'],
-               ['| ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' | ', ' ', '   ', ' ', ' |'],
-               [' -', '-', '---', '-', '---', '-', '---', '-', '---', '-', '---', '-', '- ']]
+    tabVisu = [['┌', '─', '─────', '─', '┬', '─', '─────', '─', '┬', '─', '─────', '─', '┐'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['├', '─', '─────', '─', '┼', '─', '─────', '─', '┼', '─', '─────', '─', '┤'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['├', '─', '─────', '─', '┼', '─', '─────', '─', '┼', '─', '─────', '─', '┤'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['└', '─', '─────', '─', '┴', '─', '─────', '─', '┴', '─', '─────', '─', '┘']]
     return tabVisu
+
 
 
 def NewTabCalc():  # création de la grille de calcul
@@ -85,7 +86,7 @@ def GetTabVisuCase(saisie):
     switcher est un dictionnaire, un tableau spécifique permettant de retrouver une valeur grâce à une "clé" (1 ou 2 par exemple)
     "switcher.get()" est la façon de récupérer la valeur en insérant la clé dans la parenthèse
     """
-    #  Test
+
 
     switcher = {
         1: 2,
@@ -135,24 +136,57 @@ def TourIA(tabVisu, tabCalc, symbIA):
         verif = False
         while (verif == False):
             tabVisu, tabCalc, verif = PlaceInputs(DefCoordsIASymb(choice(randPos)), tabVisu, tabCalc, symbIA)
-    else:  # Le joueur n'aura pu placer qu'un symbole auparavant, pas besoin de prendre en comptre son premier symbole dans les vérifs.
+
+    else:
+        listSymbX = []  # Listes contenant toutes les coordonnées où les symboles apparaissent
+        listSymbO = []
         for line in range(0, 3):
             for col in range(0, 3):
-                if tabCalc[line][col] != ' ':
-                    tableVerif = SetTableVerif(line, col, tabCalc)
+                if tabCalc[line][col] == 'X':
+                    listSymbX.append([line, col])  # Ajout des coordonnées dans la List
+                elif tabCalc[line][col] == 'O':
+                    listSymbO.append([line, col])  # Idem
 
-                # for lineVerif
-
+        if not CheckSymb('O', listSymbO, tabVisu, tabCalc, symbIA):
+            if not CheckSymb('X', listSymbX, tabVisu, tabCalc, symbIA):  # Si l'IA n'a pas pu placer un symbole de manière définie
+                randPos = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+                verif = False
+                while (verif == False):
+                    tabVisu, tabCalc, verif = PlaceInputs(DefCoordsIASymb(choice(randPos)), tabVisu, tabCalc, symbIA)
 
     return tabVisu, tabCalc
 
-def SetTableVerif(line, col, tabCalc):
-    tabVerif = [[' ', ' ', ' '], [' ', ' ', ' '], [' ', ' ', ' ']]
+def CheckSymb(symb, listSymb, tabVisu, tabCalc, symbIA):
+    placementDef = False
 
-    # try:
+    for elementToCompare in range(0, len(listSymb)):
+        for comparison in range(0, len(listSymb)):
+            if placementDef == False:
+                if listSymb[elementToCompare][0] == listSymb[comparison][0] and elementToCompare != comparison:  # Si les deux éléments sont sur la même ligne
 
+                    coordToAim = LookForMissingSymbPlace([listSymb[elementToCompare][1], listSymb[comparison][1]])
+                    tabVisu, tabCalc, placementDef = PlaceInputs([listSymb[elementToCompare][0] + 1, coordToAim + 1], tabVisu, tabCalc, symbIA)  # Tentative de placement dans la grille
 
-    return tabVerif
+                elif listSymb[elementToCompare][1] == listSymb[comparison][1] and elementToCompare != comparison:  # Sinon si sur la même colonne
+
+                    coordToAim = LookForMissingSymbPlace([listSymb[elementToCompare][0], listSymb[comparison][0]])
+                    tabVisu, tabCalc, placementDef = PlaceInputs([coordToAim + 1, listSymb[elementToCompare][1] + 1], tabVisu, tabCalc, symbIA)  # Tentative de placement dans la grille
+
+    return placementDef
+
+def LookForMissingSymbPlace(tabCoords):
+
+    """
+    Cette fonction a pour but de renvoyer la valeur non comprise dans tabCoords, afin que l'IA sache ou essayer de
+    placer le symbole afin d'effectuer une victoire ou un blocage
+    """
+
+    if 0 not in tabCoords:
+        return 0
+    elif 1 not in tabCoords:
+        return 1
+    else:
+        return 2
 
 def DefCoordsIASymb(coord):
 
@@ -176,7 +210,6 @@ def DefCoordsIASymb(coord):
 
 
 jouer = 'oui'
-compteur = 0
 while jouer == 'oui':
     # Initialisation des variables nécessaires à chaque parties
     compteur = 0
@@ -213,7 +246,7 @@ while jouer == 'oui':
 
     PrintTabVisu(tabVisu)
 
-    # En cas de victoire d'un joueur
+    # En cas de victoire d'un joueur#
     if victoire == True:
         print('Le joueur ' + str(numJoueur) + ' remporte la partie!')
     # En cas d'égalité
