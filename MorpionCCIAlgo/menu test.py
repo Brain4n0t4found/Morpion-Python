@@ -30,11 +30,15 @@ while q1.lower() != "oui" and q1.lower() != "non":
 					print("-=XOXOXOXOXO=- Joueur 1 -=XOXOXOXOXO=-")
 					print(" ")
 					j1 = input("Joueur 1 comment vous appeler vous ? ")
+					while j1 == "" or j1 == " ":
+						j1 = input("Joueur 1 comment vous appeler vous ? ")
 					os.system('cls')
 					print(" ")
 					print("-=XOXOXOXOXO=- Joueur 2 -=XOXOXOXOXO=-")
 					print(" ")
 					j2 = input("Joueur 2 comment vous appeler vous ? ")
+					while j2 == "" or j1 == " ":
+						j2 = input("Joueur 2 comment vous appeler vous ? ")
 					os.system('cls')
 					print(" ")
 					print("{} vous jouez les X et {} vous jouez les O !".format(j1, j2))
@@ -45,6 +49,8 @@ while q1.lower() != "oui" and q1.lower() != "non":
 					print(" ")
 					print("-=XOXOXOXOXO=- Joueur 1 -=XOXOXOXOXO=-")
 					print(" ")
+					while j1 == "" or j1 == " ":
+						j1 = input("Joueur 1 comment vous appeler vous ? ")
 					j1 = input("Joueur 1 comment vous appeler vous ? ")
 					os.system('cls')
 					print("{} vous jouez les X et l'IA joue les O ! Bonne chance {} !".format(j1, j1))
@@ -69,14 +75,18 @@ while q1.lower() != "oui" and q1.lower() != "non":
 					os.system('cls')
 					print("Très bon choix, vous allez maintenant pouvoir choisir vos noms ! ")
 					print(" ")
-					print("-=XOXOXOXOXO=- Joueur 2 -=XOXOXOXOXO=-")
+					print("-=XOXOXOXOXO=- Joueur 1 -=XOXOXOXOXO=-")
 					print(" ")
 					j1 = input("Joueur 1 comment vous appeler vous ? ")
+					while j1 == "" or j1 == " ":
+						j1 = input("Joueur 1 comment vous appeler vous ? ")
 					os.system('cls')
 					print(" ")
 					print("-=XOXOXOXOXO=- Joueur 2 -=XOXOXOXOXO=-")
 					print(" ")
 					j2 = input("Joueur 2 comment vous appeler vous ? ")
+					while j2 == "" or j1 == " ":
+						j2 = input("Joueur 2 comment vous appeler vous ? ")
 					os.system('cls')
 					print(" ")
 					print("{} vous jouez les X et {} vous jouez les O !".format(j1, j2))
@@ -85,9 +95,11 @@ while q1.lower() != "oui" and q1.lower() != "non":
 					os.system('cls')
 					print("Choix intéressant, allez vous faire le poids ? ")
 					print(" ")
-					print("-=XOXOXOXOXO=- Joueur 2 -=XOXOXOXOXO=-")
+					print("-=XOXOXOXOXO=- Joueur 1 -=XOXOXOXOXO=-")
 					print(" ")
 					j1 = input("Joueur 1 comment vous appeler vous ? ")
+					while j1 == "" or j1 == " ":
+						j1 = input("Joueur 1 comment vous appeler vous ? ")
 					os.system('cls')
 					print("{} vous jouez les X et l'IA joue les O ! Bonne chance {} !".format(j1, j1))
 			except ValueError:
