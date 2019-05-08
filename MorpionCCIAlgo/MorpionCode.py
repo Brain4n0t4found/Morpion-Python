@@ -1,40 +1,26 @@
 from random import *
+from Visu import *
+import os
 
-def NewTabVisu():  # création du visuel de la grille
-    print('\n' * 60)
-    tabVisu = [['┌', '─', '─────', '─', '┬', '─', '─────', '─', '┬', '─', '─────', '─', '┐'],
-               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
-               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
-               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
-               ['├', '─', '─────', '─', '┼', '─', '─────', '─', '┼', '─', '─────', '─', '┤'],
-               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
-               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
-               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
-               ['├', '─', '─────', '─', '┼', '─', '─────', '─', '┼', '─', '─────', '─', '┤'],
-               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
-               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
-               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
-               ['└', '─', '─────', '─', '┴', '─', '─────', '─', '┴', '─', '─────', '─', '┘']]
-    return tabVisu
+'''
+Modifications que j'ai effectué:
+- tabVisu et tabCalc deviennent des variables globales pour alléger la taille des fonctions.
+- Supressions des arguments tabVisu, tabCalc dans les arguments des fonctions pour ne garder que le nécessaire.
 
+'''
 
+def PlaceInputs(tabSaisies, symbPlayer):
 
-def NewTabCalc():  # création de la grille de calcul
-    tabCalc = [['', '', ''],
-               ['', '', ''],
-               ['', '', '']]
-    return tabCalc
+    if tabCalc[tabSaisies[0] - 1][tabSaisies[1] - 1] == '':
+        tabVisu[GetTabVisuCase(tabSaisies[0])][GetTabVisuCase(tabSaisies[1])] = ' ' + symbPlayer + ' '  # placement du symbole du joueur dans le tableau visuel
+        tabCalc[tabSaisies[0] - 1][tabSaisies[1] - 1] = symbPlayer  # placement du symbole du joueur dans le tableau de calcul
+        verif = True
+    else:
+        verif = False
 
+    return tabVisu, tabCalc, verif
 
-def PrintTabVisu(tabVisu):
-    for row in tabVisu:
-        lineStr = ""  # preparation d'une chaine de caracteres retournant une ligne entière du tableau
-        for e in row:  # pour chaque colonne dans la ligne
-            lineStr += e  # Ajouter le contenu de la colonne suivante a la chaine de caracteres
-        print(lineStr)
-
-
-def SetInTable(tabVisu, tabCalc, symbPlayer):
+def SetInTable(symbPlayer):
     tabSaisies = ['', '']
 
     for compt in range(2):
@@ -62,25 +48,15 @@ def SetInTable(tabVisu, tabCalc, symbPlayer):
 
         tabSaisies[compt] = saisie  # sauvegarde de la saisie
 
-    return PlaceInputs(tabSaisies, tabVisu, tabCalc, symbPlayer)  # placement du marqueur selon les deux saisies récupérées
+    return PlaceInputs(tabSaisies, symbPlayer)  # placement du marqueur selon les deux saisies récupérées
 
 
-def PlaceInputs(tabSaisies, tabVisu, tabCalc, symbPlayer):
-
-    if tabCalc[tabSaisies[0] - 1][tabSaisies[1] - 1] == '':
-        tabVisu[GetTabVisuCase(tabSaisies[0])][GetTabVisuCase(tabSaisies[1])] = ' ' + symbPlayer + ' '  # placement du symbole du joueur dans le tableau visuel
-        tabCalc[tabSaisies[0] - 1][tabSaisies[1] - 1] = symbPlayer  # placement du symbole du joueur dans le tableau de calcul
-        verif = True
-    else:
-        verif = False
-
-    return tabVisu, tabCalc, verif
 
 
 def GetTabVisuCase(saisie):
 
     """
-    Cette focntion a pour but de renvoyer la valeur de l'emplacement demandé dans tabVisu selon différents cas possibles
+    Cette fonction a pour but de renvoyer la valeur de l'emplacement demandé dans tabVisu selon différents cas possibles
     Elle est aussi séparée en deux parties selon si c'est la valeur d'une ligne ou d'une colonne qui est demandée
 
     switcher est un dictionnaire, un tableau spécifique permettant de retrouver une valeur grâce à une "clé" (1 ou 2 par exemple)
@@ -120,9 +96,10 @@ def CalcVictoire(tabCalc):
 
     return victoire
 
-def TourIA(tabVisu, tabCalc, symbIA):
+def TourIA(symbIA):
     symbIAexist = False
-
+    global tabCalc
+    global tabVisu
     # Analyse de s'il y a déjà un symbole de l'IA dans la grille
     for line in tabCalc:
         for case in line:
@@ -135,7 +112,7 @@ def TourIA(tabVisu, tabCalc, symbIA):
         randPos = [1, 3, 5, 7, 9]
         verif = False
         while (verif == False):
-            tabVisu, tabCalc, verif = PlaceInputs(DefCoordsIASymb(choice(randPos)), tabVisu, tabCalc, symbIA)
+            tabVisu, tabCalc, verif = PlaceInputs(DefCoordsIASymb(choice(randPos)), symbIA)
 
     else:
         listSymbX = []  # Listes contenant toutes les coordonnées où les symboles apparaissent
@@ -152,7 +129,7 @@ def TourIA(tabVisu, tabCalc, symbIA):
                 randPos = [1, 2, 3, 4, 5, 6, 7, 8, 9]
                 verif = False
                 while (verif == False):
-                    tabVisu, tabCalc, verif = PlaceInputs(DefCoordsIASymb(choice(randPos)), tabVisu, tabCalc, symbIA)
+                    tabVisu, tabCalc, verif = PlaceInputs(DefCoordsIASymb(choice(randPos)), symbIA)
 
     return tabVisu, tabCalc
 
@@ -165,12 +142,12 @@ def CheckSymb(symb, listSymb, tabVisu, tabCalc, symbIA):
                 if listSymb[elementToCompare][0] == listSymb[comparison][0] and elementToCompare != comparison:  # Si les deux éléments sont sur la même ligne
 
                     coordToAim = LookForMissingSymbPlace([listSymb[elementToCompare][1], listSymb[comparison][1]])
-                    tabVisu, tabCalc, placementDef = PlaceInputs([listSymb[elementToCompare][0] + 1, coordToAim + 1], tabVisu, tabCalc, symbIA)  # Tentative de placement dans la grille
+                    tabVisu, tabCalc, placementDef = PlaceInputs([listSymb[elementToCompare][0] + 1, coordToAim + 1], symbIA)  # Tentative de placement dans la grille
 
                 elif listSymb[elementToCompare][1] == listSymb[comparison][1] and elementToCompare != comparison:  # Sinon si sur la même colonne
 
                     coordToAim = LookForMissingSymbPlace([listSymb[elementToCompare][0], listSymb[comparison][0]])
-                    tabVisu, tabCalc, placementDef = PlaceInputs([coordToAim + 1, listSymb[elementToCompare][1] + 1], tabVisu, tabCalc, symbIA)  # Tentative de placement dans la grille
+                    tabVisu, tabCalc, placementDef = PlaceInputs([coordToAim + 1, listSymb[elementToCompare][1] + 1], symbIA)  # Tentative de placement dans la grille
 
     return placementDef
 
@@ -216,8 +193,8 @@ while jouer == 'oui':
     symbJoueur = 'O'
     numJoueur = 2
     victoire = False
-    tabVisu = NewTabVisu()
-    tabCalc = NewTabCalc()
+    # tabVisu = NewTabVisu()
+    # tabCalc = NewTabCalc()
 
     while victoire != True and compteur <= 9:
 
@@ -229,22 +206,22 @@ while jouer == 'oui':
         else:
             symbJoueur = 'O'
             numJoueur += 1
-
-        PrintTabVisu(tabVisu)
+        os.system('clear') # Nettoie l'écran avant d'afficher la grille (À tester sous Windows)
+        PrintTabVisu()
 
         if symbJoueur == 'X':
             # Saisie des coordonnées où placer le symbole du joueur (avec vérifications)
             verif = False
             while verif == False:
-                tabVisu, tabCalc, verif = SetInTable(tabVisu, tabCalc, symbJoueur)
+                tabVisu, tabCalc, verif = SetInTable(symbJoueur)
                 if verif == False:
                     print('Cette case est déjà prise!')
         else:
-            tabVisu, tabCalc = TourIA(tabVisu, tabCalc, symbJoueur)
+            tabVisu, tabCalc = TourIA(symbJoueur)
 
         victoire = CalcVictoire(tabCalc)
-
-    PrintTabVisu(tabVisu)
+    os.system('clear')
+    PrintTabVisu()
 
     # En cas de victoire d'un joueur#
     if victoire == True:
