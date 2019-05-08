@@ -1,6 +1,5 @@
 from random import *
 from Visu import *
-
 '''
 Modifications que j'ai effectué:
 - tabVisu et tabCalc deviennent des variables globales pour alléger la taille des fonctions.

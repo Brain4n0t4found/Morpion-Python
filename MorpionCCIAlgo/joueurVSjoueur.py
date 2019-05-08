@@ -1,7 +1,21 @@
 import MorpionCode
+import Visu
 
 
 def JvsJ():
+    print('''Très bon choix, vous allez maintenant pouvoir choisir vos noms !
+        -=XOXOXOXOXO=- Joueur 1 -=XOXOXOXOXO=-
+        ''')
+    j1 = input("Joueur 1, comment vous appelez-vous ?: ")
+    print('''
+    -=XOXOXOXOXO=- Joueur 2 -=XOXOXOXOXO=-
+    ''')
+
+    j2 = input("Joueur 2 comment vous appelez-vous ?: ")
+    print('''
+    - {} vous jouez les X !
+    - {} vous jouez les O !
+    Bonne chance à vous deux et que le meilleur gagne !'''.format(j1, j2))
     jouer = 'oui'
     while jouer == 'oui':
         # Initialisation des variables nécessaires à chaque parties
@@ -18,11 +32,11 @@ def JvsJ():
             if symbJoueur == 'O':
                 symbJoueur = 'X'
                 numJoueur -= 1
-                currentPlayer = "Joueur 1"
+                currentPlayer = j1
             else:
                 symbJoueur = 'O'
                 numJoueur += 1
-                currentPlayer = "Joueur 2"
+                currentPlayer = j2
 
             MorpionCode.clearPrompt()  # Nettoie l'écran avant d'afficher la grille
             MorpionCode.PrintTabVisu()
@@ -31,6 +45,7 @@ def JvsJ():
                 # Saisie des coordonnées où placer le symbole du joueur (avec vérifications)
                 verif = False
                 while verif is False:
+                    print("-=XOXOXOXOXO=- {} -=XOXOXOXOXO=-".format(currentPlayer))
                     tabVisu, tabCalc, verif = MorpionCode.SetInTable(symbJoueur)
                     if verif is False:
                         print('Cette case est déjà prise!')
@@ -39,6 +54,7 @@ def JvsJ():
                 # Saisie des coordonnées où placer le symbole du joueur (avec vérifications)
                 verif = False
                 while verif is False:
+                    print("-=XOXOXOXOXO=- {} -=XOXOXOXOXO=-".format(currentPlayer))
                     tabVisu, tabCalc, verif = MorpionCode.SetInTable(symbJoueur)
                     if verif is False:
                         print('Cette case est déjà prise!')
@@ -58,7 +74,7 @@ def JvsJ():
         continuer = True
         while continuer:
             try:
-                rep = input('Désirez-vous continuer à jouer contre l\'ordinateur ? (oui/non) : ')
+                rep = input('Désirez-vous continuer à jouer ? (oui/non) : ')
                 if rep.lower() == "oui":
                     jouer = rep.lower()
                     break

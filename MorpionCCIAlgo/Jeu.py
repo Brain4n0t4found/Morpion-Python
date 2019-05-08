@@ -1,6 +1,8 @@
-from joueurVSia import JvsIA
-from joueurVSjoueur import JvsJ
 import Visu
+import joueurVSjoueur
+import joueurVSia
+
+
 intro = True
 
 print('''
@@ -16,12 +18,12 @@ while intro:
     q1 = input("Connaissez-vous les règles du morpion? (oui/non) : ")
     if q1 == "oui":
         Visu.clearPrompt()
-        print('''Très bien ! Avant de commencer à jouer vous allez devoir choisir votre mode de jeu.
-
-                                -=XOXOXOXOXOXOXO=- Choisissez -=XOXOXOXOXOXOXO=-
-        ''')
+        print("Très bien ! Avant de commencer à jouer vous allez devoir choisir votre mode de jeu.")
         while intro:
             try:
+                print("\n" * 3)
+                print("                 -=XOXOXOXOXOXOXO=- MENU -=XOXOXOXOXOXOXO=-")
+                print("\n" * 2)
                 q2 = int(input('''Vous voulez jouer en:
                       (1) - Joueur Contre Joueur ?
                       (2) - Joueur Contre IA ?
@@ -29,34 +31,11 @@ while intro:
 
 -------------------------------------------> '''))
                 if q2 == 1:
-                    print('''Très bon choix, vous allez maintenant pouvoir choisir vos noms !
-                        -=XOXOXOXOXO=- Joueur 1 -=XOXOXOXOXO=-
-                        ''')
-                    j1 = input("Joueur 1, comment vous appelez-vous ?: ")
-                    print('''
-                    -=XOXOXOXOXO=- Joueur 2 -=XOXOXOXOXO=-
-                    ''')
-
-                    j2 = input("Joueur 2 comment vous appelez-vous ?: ")
-                    print('''
-                    - {} vous jouez les X !
-                    - {} vous jouez les O !
-                    Bonne chance à vous deux et que le meilleur gagne !'''.format(j1, j2))
                     ########### Début partie Joueur VS Joueur ##############
-                    JvsJ()
+                    joueurVSjoueur.JvsJ()
                 elif q2 == 2:
-                    print('''Choix intéressant, allez vous faire le poids ?
-
-                            -=XOXOXOXOXO=- Joueur 1 -=XOXOXOXOXO=-
-                    ''')
-                    j1 = input("Comment vous appelez-vous ? ")
-                    Visu.clearPrompt()
-                    print('''
-                    - {}, vous jouez les X
-                    - L'IA joue les O
-                    -=XOXOXOXOXO=- Bonne chance {} ! -=XOXOXOXOXO=-'''.format(j1, j1))
-    ########### Début partie contre l'IA ##############
-                    JvsIA()
+                    ########### Début partie contre l'IA ##############
+                    joueurVSia.JvsIA()    
                 elif q2 == 3:
                     print("Merci d'avoir joué")
                     quit()

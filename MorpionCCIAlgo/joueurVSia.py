@@ -1,7 +1,17 @@
 import MorpionCode
-
+import Visu
 
 def JvsIA():
+    print('''Choix intéressant, allez vous faire le poids ?
+
+            -=XOXOXOXOXO=- Joueur 1 -=XOXOXOXOXO=-
+    ''')
+    j1 = input("Comment vous appelez-vous ? ")
+    Visu.clearPrompt()
+    print('''
+    - {}, vous jouez les X
+    - L'IA joue les O
+    -=XOXOXOXOXO=- Bonne chance {} ! -=XOXOXOXOXO=-'''.format(j1, j1))
     jouer = 'oui'
     while jouer == 'oui':
         # Initialisation des variables nécessaires à chaque parties
@@ -19,7 +29,7 @@ def JvsIA():
             if symbJoueur == 'O':
                 symbJoueur = 'X'
                 numJoueur -= 1
-                currentPlayer = "Joueur 1"
+                currentPlayer = j1
             else:
                 symbJoueur = 'O'
                 numJoueur += 1
@@ -31,6 +41,7 @@ def JvsIA():
                 # Saisie des coordonnées où placer le symbole du joueur (avec vérifications)
                 verif = False
                 while verif is False:
+                    print("-=XOXOXOXOXO=- {} -=XOXOXOXOXO=-".format(currentPlayer))
                     tabVisu, tabCalc, verif = MorpionCode.SetInTable(symbJoueur)
                     if verif is False:
                         print('Cette case est déjà prise!')
