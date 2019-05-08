@@ -1,0 +1,14 @@
+										
+ 										Jeu.py
+									  /         \
+									 /           \
+                                    /             \
+						joueurVSia.py			joueurVSjoueur.py
+								  \                /
+				  	 			   \              /
+									\            /
+									MorpionCode.py (Module "random")
+										  |
+										  |
+										  |
+									   Visu.py (Moduels "os" et "Platform")

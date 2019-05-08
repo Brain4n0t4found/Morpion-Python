@@ -1,4 +1,3 @@
-from MorpionCode import *
 from joueurVSia import *
 from joueurVSjoueur import *
 intro = True
