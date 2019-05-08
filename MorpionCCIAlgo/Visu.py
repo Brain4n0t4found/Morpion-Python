@@ -1,3 +1,6 @@
+import os
+import platform
+
 tabVisu = [['┌', '─', '─────', '─', '┬', '─', '─────', '─', '┬', '─', '─────', '─', '┐'],
            ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
            ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
@@ -17,6 +20,33 @@ tabCalc = [['', '', ''],
            ['', '', ''],
            ['', '', '']]
 
+global tabVisuInit
+tabVisuInit = [['┌', '─', '─────', '─', '┬', '─', '─────', '─', '┬', '─', '─────', '─', '┐'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['├', '─', '─────', '─', '┼', '─', '─────', '─', '┼', '─', '─────', '─', '┤'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['├', '─', '─────', '─', '┼', '─', '─────', '─', '┼', '─', '─────', '─', '┤'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│', ' ', '     ', ' ', '│'],
+               ['└', '─', '─────', '─', '┴', '─', '─────', '─', '┴', '─', '─────', '─', '┘']]
+
+global tabCalcInit
+tabCalcInit = [['', '', ''],
+               ['', '', ''],
+               ['', '', '']]
+
+
+def clearPrompt():  # Vide le terminal en vérifiant quelle commande lancer selon le système d'exploitation
+    if platform.system() == "Linux":
+        os.system('clear')
+    elif platform.system() == "Windows":
+        os.system('cls')
+
 
 def PrintTabVisu():
     global tabVisu
@@ -27,5 +57,5 @@ def PrintTabVisu():
         print(lineStr)
 
 
-if __name__ == "__main__": # Permet de lancer uniquement ce fichier si c'est celui-ci qui est explicitement exécuté (Afin de tester).
+if __name__ == "__main__":  # Permet de lancer uniquement ce fichier si c'est celui-ci qui est explicitement exécuté (Afin de tester).
     print(PrintTabVisu())

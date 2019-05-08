@@ -1,26 +1,19 @@
 from random import *
 from Visu import *
-import os
 
 '''
 Modifications que j'ai effectué:
 - tabVisu et tabCalc deviennent des variables globales pour alléger la taille des fonctions.
 - Supressions des arguments tabVisu, tabCalc dans les arguments des fonctions pour ne garder que le nécessaire.
+- Ajout du module "os" pour clean l'écran avant chaque apparition de tabVisu
+- Mise à la norme PEP8
 
 '''
 
-def PlaceInputs(tabSaisies, symbPlayer):
 
-    if tabCalc[tabSaisies[0] - 1][tabSaisies[1] - 1] == '':
-        tabVisu[GetTabVisuCase(tabSaisies[0])][GetTabVisuCase(tabSaisies[1])] = ' ' + symbPlayer + ' '  # placement du symbole du joueur dans le tableau visuel
-        tabCalc[tabSaisies[0] - 1][tabSaisies[1] - 1] = symbPlayer  # placement du symbole du joueur dans le tableau de calcul
-        verif = True
-    else:
-        verif = False
-
-    return tabVisu, tabCalc, verif
-
-def SetInTable(symbPlayer):
+def SetInTable(symbPlayer):  # Permet d'enregistrer et vérifier la saisie du joueur puis de placer le marqueur selon les coordonnées
+    global j1
+    global j2
     tabSaisies = ['', '']
 
     for compt in range(2):
@@ -37,12 +30,12 @@ def SetInTable(symbPlayer):
                     print('Veuillez saisir un nombre entre 1 et 3!')
 
             # si la conversion a échoué
-            except:
-                # essai de converison de saisie en float
+            except Exception:
+                # essai de conversion de saisie en float
                 try:
                     float(saisie)
                     print(saisie + ' est un nombre décimal, la saisie doit être un entier!')  # si la conversion en float a réussi
-                except:
+                except Exception:
                     print('La saisie n\'est pas un nombre!')  # si même la conversion en float n'a pas réussi
                 saisie = 0
 
@@ -51,10 +44,7 @@ def SetInTable(symbPlayer):
     return PlaceInputs(tabSaisies, symbPlayer)  # placement du marqueur selon les deux saisies récupérées
 
 
-
-
 def GetTabVisuCase(saisie):
-
     """
     Cette fonction a pour but de renvoyer la valeur de l'emplacement demandé dans tabVisu selon différents cas possibles
     Elle est aussi séparée en deux parties selon si c'est la valeur d'une ligne ou d'une colonne qui est demandée
@@ -62,7 +52,6 @@ def GetTabVisuCase(saisie):
     switcher est un dictionnaire, un tableau spécifique permettant de retrouver une valeur grâce à une "clé" (1 ou 2 par exemple)
     "switcher.get()" est la façon de récupérer la valeur en insérant la clé dans la parenthèse
     """
-
 
     switcher = {
         1: 2,
@@ -72,8 +61,20 @@ def GetTabVisuCase(saisie):
     return switcher.get(saisie)
 
 
-def CalcVictoire(tabCalc):
+def PlaceInputs(tabSaisies, symbPlayer):
 
+    if tabCalc[tabSaisies[0] - 1][tabSaisies[1] - 1] == '':
+        tabVisu[GetTabVisuCase(tabSaisies[0])][GetTabVisuCase(tabSaisies[1])] = '  ' + symbPlayer + '  '  # placement du symbole du joueur dans le tableau visuel
+        tabCalc[tabSaisies[0] - 1][tabSaisies[1] - 1] = symbPlayer  # placement du symbole du joueur dans le tableau de calcul
+        verif = True
+    else:
+        verif = False
+
+    return tabVisu, tabCalc, verif
+
+
+def CalcVictoire():
+    global tabCalc
     victoire = False
 
     for x in range(0, 3):  # Boucle de vérification des lignes et des colonnes
@@ -96,6 +97,7 @@ def CalcVictoire(tabCalc):
 
     return victoire
 
+
 def TourIA(symbIA):
     symbIAexist = False
     global tabCalc
@@ -104,14 +106,13 @@ def TourIA(symbIA):
     for line in tabCalc:
         for case in line:
             if case == symbIA:
-                if symbIAexist == False:
+                if symbIAexist is False:
                     symbIAexist = True
 
-
-    if symbIAexist == False:  # Si ucun symbole de l'IA n'a été trouvé
+    if symbIAexist is False:  # Si ucun symbole de l'IA n'a été trouvé
         randPos = [1, 3, 5, 7, 9]
         verif = False
-        while (verif == False):
+        while (verif is False):
             tabVisu, tabCalc, verif = PlaceInputs(DefCoordsIASymb(choice(randPos)), symbIA)
 
     else:
@@ -128,17 +129,18 @@ def TourIA(symbIA):
             if not CheckSymb('X', listSymbX, tabVisu, tabCalc, symbIA):  # Si l'IA n'a pas pu placer un symbole de manière définie
                 randPos = [1, 2, 3, 4, 5, 6, 7, 8, 9]
                 verif = False
-                while (verif == False):
+                while (verif is False):
                     tabVisu, tabCalc, verif = PlaceInputs(DefCoordsIASymb(choice(randPos)), symbIA)
 
     return tabVisu, tabCalc
+
 
 def CheckSymb(symb, listSymb, tabVisu, tabCalc, symbIA):
     placementDef = False
 
     for elementToCompare in range(0, len(listSymb)):
         for comparison in range(0, len(listSymb)):
-            if placementDef == False:
+            if placementDef is False:
                 if listSymb[elementToCompare][0] == listSymb[comparison][0] and elementToCompare != comparison:  # Si les deux éléments sont sur la même ligne
 
                     coordToAim = LookForMissingSymbPlace([listSymb[elementToCompare][1], listSymb[comparison][1]])
@@ -151,8 +153,8 @@ def CheckSymb(symb, listSymb, tabVisu, tabCalc, symbIA):
 
     return placementDef
 
-def LookForMissingSymbPlace(tabCoords):
 
+def LookForMissingSymbPlace(tabCoords):
     """
     Cette fonction a pour but de renvoyer la valeur non comprise dans tabCoords, afin que l'IA sache ou essayer de
     placer le symbole afin d'effectuer une victoire ou un blocage
@@ -164,6 +166,7 @@ def LookForMissingSymbPlace(tabCoords):
         return 1
     else:
         return 2
+
 
 def DefCoordsIASymb(coord):
 
@@ -184,56 +187,3 @@ def DefCoordsIASymb(coord):
         9: [3, 3]
     }
     return switcher.get(coord)
-
-
-jouer = 'oui'
-while jouer == 'oui':
-    # Initialisation des variables nécessaires à chaque parties
-    compteur = 0
-    symbJoueur = 'O'
-    numJoueur = 2
-    victoire = False
-    # tabVisu = NewTabVisu()
-    # tabCalc = NewTabCalc()
-
-    while victoire != True and compteur <= 9:
-
-        # Initialisation des variables nécessaires à chaque tours
-        compteur += 1
-        if symbJoueur == 'O':
-            symbJoueur = 'X'
-            numJoueur -= 1
-        else:
-            symbJoueur = 'O'
-            numJoueur += 1
-        os.system('clear') # Nettoie l'écran avant d'afficher la grille (À tester sous Windows)
-        PrintTabVisu()
-
-        if symbJoueur == 'X':
-            # Saisie des coordonnées où placer le symbole du joueur (avec vérifications)
-            verif = False
-            while verif == False:
-                tabVisu, tabCalc, verif = SetInTable(symbJoueur)
-                if verif == False:
-                    print('Cette case est déjà prise!')
-        else:
-            tabVisu, tabCalc = TourIA(symbJoueur)
-
-        victoire = CalcVictoire(tabCalc)
-    os.system('clear')
-    PrintTabVisu()
-
-    # En cas de victoire d'un joueur#
-    if victoire == True:
-        print('Le joueur ' + str(numJoueur) + ' remporte la partie!')
-    # En cas d'égalité
-    else:
-        print('Égalité entre les deux joueurs')
-
-    # Demande si le(s) joueurs souhaitent rejouer
-    rep = ''
-    while rep.lower() != "oui" and rep.lower() != "non":
-        rep = input('Désirez-vous continuer à jouer ? (oui/non) : ')
-        if rep.lower() != "oui" and rep.lower() != "non":
-            print('Veuillez entrer oui ou non!')
-    jouer = rep.lower()
