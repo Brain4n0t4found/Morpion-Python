@@ -12,16 +12,13 @@ Modifications que j'ai effectué:
 
 
 def SetInTable(symbPlayer):  # Permet d'enregistrer et vérifier la saisie du joueur puis de placer le marqueur selon les coordonnées
-    global j1
-    global j2
     tabSaisies = ['', '']
-
     for compt in range(2):
         strAdapt = ['ligne', 'colonne']
         saisie = 0  # initialisation de saisie pour rentrer dans le while
 
         while saisie < 1 or saisie > 3:
-            saisie = str(input('Veuillez entrez le numéro de la ' + strAdapt[compt] + ' où placer votre marqueur (1 à 3): '))  # récupération de la saisie de l'utilisateur
+            saisie = str(input('Entrez le numéro de la ' + strAdapt[compt] + ' où placer votre marqueur (1 à 3): '))  # récupération de la saisie de l'utilisateur
 
             # essai de conversion de saisie en int
             try:
