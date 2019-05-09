@@ -148,16 +148,16 @@ def TourIA(tabVisu, tabCalc, symbIA):
 
         for line in range(0, 3):
             for col in range(0, 3):
-                if tabCalc[line][col] == 'X':
+                if tabCalc[line][col] == ' X ':
                     listSymbX.append([line, col])  # Ajout des coordonnées dans la List
-                elif tabCalc[line][col] == 'O':
+                elif tabCalc[line][col] == ' O ':
                     listSymbO.append([line, col])  # Idem
 
         FillListDiag(listDiagHautGaucheCoord, listDiagHautGauche, tabCalc)  # remplissage des listes de symboles en diagonale
         FillListDiag(listDiagHautDroiteCoord, listDiagHautDroite, tabCalc)
 
-        if not CheckSymb('O', listSymbO, tabVisu, tabCalc, symbIA, listDiagHautDroite, listDiagHautGauche):
-            if not CheckSymb('X', listSymbX, tabVisu, tabCalc, symbIA, listDiagHautDroite, listDiagHautGauche):  # Si l'IA n'a pas pu placer un symbole de manière définie
+        if not CheckSymb(' O ', listSymbO, tabVisu, tabCalc, symbIA, listDiagHautDroite, listDiagHautGauche):
+            if not CheckSymb(' X ', listSymbX, tabVisu, tabCalc, symbIA, listDiagHautDroite, listDiagHautGauche):  # Si l'IA n'a pas pu placer un symbole de manière définie
                 randPos = [1, 2, 3, 4, 5, 6, 7, 8, 9]
                 verif = False
                 while (verif == False):
@@ -249,8 +249,8 @@ def GamePlayMenu():
     os.system('cls')
     print(" ")
     print("┌────────────────────────────────────────────────=Présentation=───────────────────────────────────────────────────┐")
-    print("│Bonjour et bienvenue dans le jeu du morpion réalisé par le meilleur groupe du BTS SIO 2018 de la CCI Strasbourg.│")
-    print("│Vous allez être projeté dans une expérience unique du jeu du morpion.                                           │")
+    print("│Bonjour et bienvenue dans le jeu du morpion réalisé par le meilleur groupe du BTS SIO 2018 de la CCI Strasbourg. │")
+    print("│Vous allez être projeté dans une expérience unique du jeu du morpion.                                            │")
     print("└────────────────────────────────────────────────=XOXOXOXOXOXO=───────────────────────────────────────────────────┘")
     print(" ")
     rep = ''
@@ -271,7 +271,7 @@ def GamePlayMenu():
         print(" ")
         print("┌───────────────────────────────────────────────=Règles=─────────────────────────────────────────────────┐")
         print("│Les règles sont simples, vous allez devoir gagner en alignant votre symbole dans une grille de 3 par 3, │")
-        print("│tout cela en moins de 10 tours. Avant de commancer à jouer vous allez devoir choisir votre mode de jeu.│")
+        print("│tout cela en moins de 10 tours. Avant de commancer à jouer vous allez devoir choisir votre mode de jeu. │")
         print("└───────────────────────────────────────────────=XOXOXO=─────────────────────────────────────────────────┘")
         print(" ")
         print("            -=XOXOXOXOXOXOXO=- Choisissez -=XOXOXOXOXOXOXO=-            ")
@@ -347,6 +347,8 @@ def QuestionsFin(j1, j2):
                 print('Veuillez entrer oui ou non!')
         if repNom.lower() == 'oui':
             j1, j2 = ChangerNoms(repNumModeJeu)
+    else:
+        repNumModeJeu = 0
 
     return repJouer, repNumModeJeu, j1, j2
 
@@ -380,7 +382,7 @@ jouer = 'oui'
 while jouer == 'oui':
     # Initialisation des variables nécessaires à chaque parties
     compteur = 1
-    symbJoueur = 'O'
+    symbJoueur = ' O '
     numJoueur = 2
     victoire = False
     tabVisu = NewTabVisu()
@@ -389,16 +391,16 @@ while jouer == 'oui':
     while victoire != True and compteur <= 9:
 
         # Initialisation des variables nécessaires à chaque tours
-        if symbJoueur == 'O':
-            symbJoueur = 'X'
+        if symbJoueur == ' O ':
+            symbJoueur = ' X '
             numJoueur -= 1
         else:
-            symbJoueur = 'O'
+            symbJoueur = ' O '
             numJoueur += 1
 
         PrintTabVisu(tabVisu)
 
-        if symbJoueur == 'X':
+        if symbJoueur == ' X ':
             # Saisie des coordonnées où placer le symbole du joueur (avec vérifications)
             verif = False
             while verif == False:
