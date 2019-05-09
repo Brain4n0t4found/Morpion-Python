@@ -186,12 +186,12 @@ def CheckSymb(symb, listSymb, tabVisu, tabCalc, symbIA, listDiagHautDroite, list
                     coordToAim = LookForMissingSymbPlace('', [listSymb[elementToCompare][0], listSymb[comparison][0]])
                     tabVisu, tabCalc, placementDef = PlaceInputs([coordToAim + 1, listSymb[elementToCompare][1] + 1], tabVisu, tabCalc, symbIA)  # Tentative de placement dans la grille
 
-    if len(listDiagHautDroite) == 2:
+    if len(listDiagHautDroite) == 2 and placementDef == False:
         if tabCalc[listDiagHautDroite[0][0]][listDiagHautDroite[0][1]] == tabCalc[listDiagHautDroite[1][0]][listDiagHautDroite[1][1]] and tabCalc[listDiagHautDroite[0][0]][listDiagHautDroite[0][1]] == symb:  # S'il s'agit du même symbole
             coordToAimLine, coordToAimCol = LookForMissingSymbPlace('right', [listDiagHautDroite[0][0], listDiagHautDroite[1][0]])
             tabVisu, tabCalc, placementDef = PlaceInputs([coordToAimLine + 1, coordToAimCol + 1], tabVisu, tabCalc, symbIA)  # Tentative de placement dans la grille
 
-    if len(listDiagHautGauche) == 2:
+    if len(listDiagHautGauche) == 2 and placementDef == False:
         if tabCalc[listDiagHautGauche[0][0]][listDiagHautGauche[0][1]] == tabCalc[listDiagHautGauche[1][0]][listDiagHautGauche[1][1]] and tabCalc[listDiagHautGauche[0][0]][listDiagHautGauche[0][1]] == symb:  # S'il s'agit du même symbole
             coordToAimLine, coordToAimCol = LookForMissingSymbPlace('left', [listDiagHautGauche[0][0], listDiagHautGauche[1][0]])
             tabVisu, tabCalc, placementDef = PlaceInputs([coordToAimLine + 1, coordToAimCol + 1], tabVisu, tabCalc, symbIA)  # Tentative de placement dans la grille
