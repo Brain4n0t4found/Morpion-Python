@@ -1,5 +1,5 @@
 from random import *
-import os
+import os 
 
 def NewTabVisu():  # création du visuel de la grille
     print('\n' * 60)
@@ -398,6 +398,7 @@ while jouer == 'oui':
             symbJoueur = ' O '
             numJoueur += 1
 
+        os.system('cls')
         PrintTabVisu(tabVisu)
 
         if symbJoueur == ' X ':
@@ -420,6 +421,7 @@ while jouer == 'oui':
         victoire = CalcVictoire(tabCalc)
         compteur += 1
 
+    os.system('cls')
     PrintTabVisu(tabVisu)
 
     # En cas de victoire d'un joueur#
